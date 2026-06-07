@@ -20,6 +20,12 @@ public class PlayerMovement : MonoBehaviour
 
     void FixedUpdate()
     {
-        rb.MovePosition(rb.position + movement * moveSpeed * Time.fixedDeltaTime);
+         Vector2 newPosition =
+             rb.position + movement * moveSpeed * Time.fixedDeltaTime;
+
+         newPosition.x = Mathf.Clamp(newPosition.x, -5.3f, 5.3f);
+         newPosition.y = Mathf.Clamp(newPosition.y, -2.8f, 2.8f);
+
+         rb.MovePosition(newPosition);
     }
 }
