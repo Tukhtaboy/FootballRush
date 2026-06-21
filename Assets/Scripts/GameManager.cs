@@ -71,16 +71,41 @@ public class GameManager : MonoBehaviour
 }
 
     void Update()
+{
+    // ESC pauses and resumes the game
+    if (Input.GetKeyDown(KeyCode.Escape))
     {
-        timeLeft -= Time.deltaTime;
-        UpdateTimerText();
-
-        if (timeLeft <= 0)
+        if (Time.timeScale == 1f)
         {
-            PlayerCaught();
+            Time.timeScale = 0f;
+            
+            if (backgroundMusic != null)
+                backgroundMusic.Pause();
+
+            messageText.text = "PAUSED";
+        }
+        else
+        {
+            Time.timeScale = 1f;
+            
+            if (backgroundMusic != null)
+              backgroundMusic.UnPause();
+            
+            messageText.text = "";
         }
     }
 
+    if (Time.timeScale == 0f)
+        return;
+
+    timeLeft -= Time.deltaTime;
+    UpdateTimerText();
+
+    if (timeLeft <= 0)
+    {
+        PlayerCaught();
+    }
+}
     public void AddScore()
     {
         score++;
